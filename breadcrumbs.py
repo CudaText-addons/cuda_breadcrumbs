@@ -848,7 +848,8 @@ class CodeTree:
                     cls._h_tree = dlg_proc(cls._h, DLG_CTL_HANDLE, index=_n)
 
                 _h_tree = cls._h_tree
-                cls.ed.action(EDACTION_CODETREE_FILL, _h_tree)   # fill local tree
+                if not cls.ed.action(EDACTION_CODETREE_FILL, _h_tree):   # fill local tree
+                    tree_proc(_h_tree, TREE_ITEM_DELETE, id_item=0) # no lexer active? clear internal tree
 
         if opt_code_navigation == 1:
             items = tree_proc(_h_tree, TREE_ITEM_ENUM, id_item=parent)

@@ -1,3 +1,6 @@
+2022.10.20
+- fix: after switch to ui-tab w/o lexer, plugin must clear it's code-tree cells (by Alexey T.)
+
 2021.07.09
 + add: file system tree-dialog: go up a level on <Shift+Backspace>
 
