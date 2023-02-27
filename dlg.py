@@ -61,6 +61,8 @@ class TreeDlg:
         global SHOW_HIDDEN_FILES
         global POSITION_BOTTOM
         global CODE_TREE_H
+        global DLG_W
+        global DLG_H
 
         self.h = None
         self.h_tree = None
@@ -87,6 +89,8 @@ class TreeDlg:
             SHOW_HIDDEN_FILES = opts.get('show_hidden_files', SHOW_HIDDEN_FILES)
             POSITION_BOTTOM   = opts.get('position_bottom',   POSITION_BOTTOM)
             CODE_TREE_H       = opts.get('code_tree_height',  CODE_TREE_H)
+            DLG_W             = opts.get('dialog_w',          DLG_W)
+            DLG_H             = opts.get('dialog_h',          DLG_H)
 
 
     def init_form(self):
@@ -100,7 +104,8 @@ class TreeDlg:
         ###### FORM #######################
         dlg_proc(h, DLG_PROP_SET, prop={
                 'cap': _('BreadCrumbs Tree'),
-                'w': DLG_W, 'h': DLG_H,
+                'w': DLG_W,
+                'h': DLG_H,
                 'color': color_form_bg,
                 'border': DBORDER_NONE,
                 'keypreview': True,
