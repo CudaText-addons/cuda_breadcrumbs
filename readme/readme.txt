@@ -47,8 +47,9 @@ Options description:
 	* -1 - full screen height
 	* 0 - same as usual
 	* <pixel height>
+* "dialog_width" - width of the popup-dialog
+* "dialog_height" - height of the popup-dialog
     
 
 Author: halfbrained (https://github.com/halfbrained)
-
 License: MIT

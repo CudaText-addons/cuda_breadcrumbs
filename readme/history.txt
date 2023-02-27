@@ -1,3 +1,6 @@
+2023.02.27
++ add: options "dialog width" and "dialog height" (by Alexey T.)
+
 2022.10.20
 - fix: after switch to ui-tab w/o lexer, plugin must clear it's code-tree cells (by Alexey T.)
 
