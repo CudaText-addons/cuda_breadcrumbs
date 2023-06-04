@@ -154,6 +154,13 @@ class Command:
         ini_write(fn_config, OPT_SEC, 'dialog_height',      str(opt_dialog_h) )
         file_open(fn_config)
 
+        lines = [ed.get_text_line(i) for i in range(ed.get_line_count())]
+        try:
+            index = lines.index('['+OPT_SEC+']')
+            ed.set_caret(0, index)
+        except:
+            pass
+
     def on_caret(self, ed_self):
         _callback = "module=cuda_breadcrumbs;cmd=_update_callback;"
         timer_proc(TIMER_START_ONE, _callback, 500, tag=str(ed_self.h))
