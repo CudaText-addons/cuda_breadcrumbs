@@ -558,6 +558,8 @@ class TreeDlg:
         pattern = s.lower() + '*'
 
         sel_id = tree_proc(self.h_tree, TREE_ITEM_GET_SELECTED)
+        if sel_id is None:
+            return
         sel_props = tree_proc(self.h_tree, TREE_ITEM_GET_PROPS, id_item=sel_id) # 'parent'
 
         if not ignore_current  and  fnmatch(sel_props['text'], pattern):
