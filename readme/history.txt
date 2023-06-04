@@ -1,3 +1,7 @@
+2023.06.04
+- fix: crash when entering search-text in 'search' field and press Enter
++ add: put caret on ini-section, when calling Config command
+
 2023.02.27
 + add: options "dialog width" and "dialog height" (by Alexey T.)
 
