@@ -1,3 +1,6 @@
+2023.06.14
++ add: option "show_bar" (by @mix-7)
+
 2023.06.04
 - fix: crash when entering search-text in 'search' field and press Enter
 + add: put caret on ini-section, when calling Config command
