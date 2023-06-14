@@ -19,6 +19,7 @@ dir_settings = app_path(APP_DIR_SETTINGS)
 fn_config    = os.path.join(dir_settings, 'plugins.ini')
 OPT_SEC      = 'breadcrumbs'
 
+opt_show_bar          = False
 opt_position_bottom   = True
 opt_root_dir_source   = [0]
 opt_show_root_parents = True
@@ -98,6 +99,8 @@ class Command:
 
     def _load_config(self):
         global PROJECT_DIR
+        global SHOW_BAR
+        global opt_show_bar
         global opt_position_bottom
         global opt_root_dir_source
         global opt_show_root_parents
@@ -121,6 +124,8 @@ class Command:
             print(_('NOTE: Breadcrumbs - Unable to parse option value: "root_dir_source" should be '
                     'a comma-separated string of integers 0-2'))
 
+        opt_show_bar = str_to_bool(ini_read(fn_config, OPT_SEC, 'show_bar', '1'))
+        SHOW_BAR = opt_show_bar
         opt_position_bottom = str_to_bool(ini_read(fn_config, OPT_SEC, 'position_bottom', '1'))
         opt_show_root_parents = str_to_bool(ini_read(fn_config, OPT_SEC, 'show_root_parents', '1'))
         opt_file_sort_type = ini_read(fn_config, OPT_SEC, 'file_sort_type', opt_file_sort_type)
@@ -139,6 +144,7 @@ class Command:
 
     def config(self):
         _root_dir_source_str = ','.join(map(str, opt_root_dir_source))
+        ini_write(fn_config, OPT_SEC, 'show_bar',           bool_to_str(opt_show_bar) )
         ini_write(fn_config, OPT_SEC, 'position_bottom',    bool_to_str(opt_position_bottom) )
         ini_write(fn_config, OPT_SEC, 'root_dir_source',    _root_dir_source_str)
         ini_write(fn_config, OPT_SEC, 'show_root_parents',  bool_to_str(opt_show_root_parents) )
