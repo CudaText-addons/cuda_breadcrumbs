@@ -430,7 +430,7 @@ class TreeDlg:
             if x0 != -1  and  y0 != -1:     # move caret to target range
                 _top = max(0, y0-CODE_NAV_TOP_INDENT)
                 edt.set_prop(PROP_LINE_TOP, _top)
-                edt.set_caret(x0,y0, options=CARET_OPTION_UNFOLD)
+                edt.set_caret(x0, y0)
 
 
     @lock_tree

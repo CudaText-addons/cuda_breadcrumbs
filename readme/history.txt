@@ -1,3 +1,6 @@
+2024.03.21
+- fix: avoid deprecated API
+
 2023.06.14
 + add: option "show_bar" (by @mix-7)
 
