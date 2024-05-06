@@ -703,9 +703,9 @@ class Colors:
     def update(cls):
         colors = app_proc(PROC_THEME_UI_DICT_GET, '')
 
-        cls.bg      = colors['EdTextBg'     ]['color']
+        cls.bg      = colors['TabBg'        ]['color']
 
-        cls.path_bg = colors['TabBg'        ]['color']
+        cls.path_bg = colors['TabPassive'   ]['color']
         cls.path_fg = colors['TabFont'      ]['color']
         cls.path_bg_root_parents = colors['SideBg']['color']
 
