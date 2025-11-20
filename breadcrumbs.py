@@ -789,7 +789,9 @@ class CodeTree:
 
             res = cls.bisect_codetreet(items, target_pos)
             if res is None:     # have missing range in current `items` -> scan every item
-                for id_,name in items:
+                for item in items:
+                    id_ = item['id']
+                    name = item['text']
                     scan_tree_item(target_pos, results, parent=id_)
             else:   # found matching range
                 id_ = res[1]
@@ -839,7 +841,7 @@ class CodeTree:
         while lo < hi:
             mid = (lo+hi)//2
 
-            range_ = tree_proc(cls._h_active_tree, TREE_ITEM_GET_RANGE, id_item=a[mid][0]) # x0,y0, x1,y1
+            range_ = tree_proc(cls._h_active_tree, TREE_ITEM_GET_RANGE, id_item=a[mid]['id']) # x0,y0, x1,y1
             if range_[0] == -1:
                 #print(f'NOTE: nore result: {a[mid]}')
                 return None
@@ -853,8 +855,8 @@ class CodeTree:
 
         if lo == 0:
             return None
-        range_ = tree_proc(cls._h_active_tree, TREE_ITEM_GET_RANGE, id_item=a[lo-1][0])
-        return range_, a[lo-1][0]
+        range_ = tree_proc(cls._h_active_tree, TREE_ITEM_GET_RANGE, id_item=a[lo-1]['id'])
+        return range_, a[lo-1]['id']
 
 
     @classmethod
@@ -874,9 +876,7 @@ class CodeTree:
                 if not cls.ed.action(EDACTION_CODETREE_FILL, _h_tree):   # fill local tree
                     tree_proc(_h_tree, TREE_ITEM_DELETE, id_item=0) # no lexer active? clear internal tree
 
-        if opt_code_navigation == 1:
-            items = tree_proc(_h_tree, TREE_ITEM_ENUM, id_item=parent)
-        elif opt_code_navigation == 2:
+        if opt_code_navigation in (1, 2):
             items = tree_proc(_h_tree, TREE_ITEM_ENUM_EX, id_item=parent)
 
         cls._h_active_tree = _h_tree

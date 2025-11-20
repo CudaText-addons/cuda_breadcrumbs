@@ -1,3 +1,6 @@
+2025.11.20
+- fix: avoid deprecated API
+
 2024.03.21
 - fix: avoid deprecated API
 

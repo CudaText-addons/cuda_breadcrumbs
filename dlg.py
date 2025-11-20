@@ -417,8 +417,8 @@ class TreeDlg:
             else:           # load directory
                 if len(sel_item.children) == 1  and  sel_item.children[0] is fake_node: # not checked yet
                     # remove fake item
-                    items = tree_proc(self.h_tree, TREE_ITEM_ENUM, id_item=sel_item.id)
-                    tree_proc(self.h_tree, TREE_ITEM_DELETE, id_item=items[0][0])
+                    items = tree_proc(self.h_tree, TREE_ITEM_ENUM_EX, id_item=sel_item.id)
+                    tree_proc(self.h_tree, TREE_ITEM_DELETE, id_item=items[0]['id'])
 
                     sel_item.children = load_dir(sel_item.full_path, parent=sel_item)
                     self._fill_tree(sel_item.children,  parent=sel_item.id)
@@ -503,11 +503,11 @@ class TreeDlg:
     def _get_tree_id(self, path_items, ind=0, id_=0):
         # recursion because nodes can have same names (html...)
         name = path_items[ind]
-        items = tree_proc(self.h_tree, TREE_ITEM_ENUM, id_item=id_) # list[id,name] or None
+        items = tree_proc(self.h_tree, TREE_ITEM_ENUM_EX, id_item=id_) # dict
         if not items:
             return None
 
-        match_ids = (id_ for id_,item_name in items  if item_name == name)
+        match_ids = (item['id'] for item in items  if item['text'] == name)
         for id_item in match_ids:
             if ind == len(path_items)-1: # found last
                 return id_item
@@ -525,7 +525,7 @@ class TreeDlg:
 
         def search(id_parent, id_start=None): #SKIP
             nonlocal n_checks
-            items = tree_proc(self.h_tree, TREE_ITEM_ENUM, id_item=id_parent)
+            items = tree_proc(self.h_tree, TREE_ITEM_ENUM_EX, id_item=id_parent)
 
             if not items:
                 return None
@@ -533,10 +533,12 @@ class TreeDlg:
             if reverse:
                 items.reverse()
             if id_start is not None:  # start from item-after-`id_start`  (if absent - from start)
-                items = list(dropwhile(lambda x: x[0] != id_start, items))[1:]  or  items
+                items = list(dropwhile(lambda x: x['id'] != id_start, items))[1:]  or  items
 
-            for id_,text in items:
+            for item in items:
                 n_checks += 1
+                id_ = item['id']
+                text = item['text']
                 text = text.lower()
                 if fnmatch(text, pattern):  return id_      # found match
                 if id_ == sel_id:           return stop     # did full circle -> stop
@@ -559,9 +561,9 @@ class TreeDlg:
 
         sel_id = tree_proc(self.h_tree, TREE_ITEM_GET_SELECTED)
         if sel_id is None:
-            items = tree_proc(self.h_tree, TREE_ITEM_ENUM, id_item=0)
+            items = tree_proc(self.h_tree, TREE_ITEM_ENUM_EX, id_item=0)
             if items:
-                sel_id = items[0][0]
+                sel_id = items[0]['id']
             else:
                 return
 
