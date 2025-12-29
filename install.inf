@@ -4,11 +4,10 @@ desc=Widget for quick filesystem navigation
 type=cudatext-plugin
 subdir=cuda_breadcrumbs
 homepage=https://github.com/halfbrained/cuda_breadcrumbs
-api=1.0.405
+api=1.0.471
 
 [item1]
 section=events
-; actual event list is in `breadcrumbs.py > Command.__init__`
 events=on_open,on_save,on_state~,on_focus~,on_close~
 
 [item2]
