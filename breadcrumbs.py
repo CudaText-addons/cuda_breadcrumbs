@@ -90,12 +90,8 @@ class Command:
 
         Colors.update()
 
-        # subscribe to events
-        _events = 'on_open,on_save,on_state,on_focus,on_close'
         if opt_code_navigation:
-            _events += ',on_caret'
-        _ev_str = 'cuda_breadcrumbs;{};;'.format(_events)
-        app_proc(PROC_SET_EVENTS, _ev_str)
+            app_proc(PROC_EVENTS_SUB, 'cuda_breadcrumbs;on_caret_slow;;')
 
     def _load_config(self):
         global PROJECT_DIR
@@ -167,7 +163,7 @@ class Command:
         except:
             pass
 
-    def on_caret(self, ed_self):
+    def on_caret_slow(self, ed_self):
         _callback = "module=cuda_breadcrumbs;cmd=_update_callback;"
         timer_proc(TIMER_START_ONE, _callback, 500, tag=str(ed_self.h))
 
