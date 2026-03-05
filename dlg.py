@@ -312,7 +312,6 @@ class TreeDlg:
     def _on_key(self, id_dlg, id_ctl, data='', info=''):
         key_code = id_ctl
         state = data
-        _CARET_HORZ_INDENT = 4
 
         if key_code in {VK_ENTER, VK_SPACE}  and  not state:
             if self._activate_item():
@@ -331,9 +330,9 @@ class TreeDlg:
         elif key_code == VK_BACKSPACE  and  not state:
             carets = self.edit.get_carets()
             if carets and len(carets) == 1 and carets[0][2] == -1 and carets[0][0] > 0:
-                x = carets[0][0]
-                self.edit.delete(x-1, 0,  x, 0)
-                self.edit.action(EDACTION_SHOW_POS, (x-1-_CARET_HORZ_INDENT, 0), (0, 0))
+                self.edit.cmd(cmds.cCommand_KeyBackspace)
+                # _CARET_HORZ_INDENT = 4
+                # self.edit.action(EDACTION_SHOW_POS, (x-1-_CARET_HORZ_INDENT, 0), (0, 0))
                 return False
 
         elif key_code == VK_BACKSPACE  and  state == 's':
@@ -343,8 +342,7 @@ class TreeDlg:
             carets = self.edit.get_carets()
             if carets and len(carets) == 1 and carets[0][2] == -1 \
                     and carets[0][0] < len(self.edit.get_text_all()):
-                x = carets[0][0]
-                self.edit.delete(x,0,  x+1,0)
+                self.edit.cmd(cmds.cCommand_KeyDelete)
                 return False
 
         elif key_code == VK_F3 and state in {'', 's'}:  # <F3> or <Shift+F3>
