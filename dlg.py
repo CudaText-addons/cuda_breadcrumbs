@@ -3,11 +3,10 @@ import json
 from pathlib import Path
 
 from cudatext import *
+import cudatext_cmd as cmds
 
 from cudax_lib import get_translation
 _ = get_translation(__file__)  # I18N
-
-cmd_FileClose = 2510
 
 IS_WIN = app_proc(PROC_GET_OS_SUFFIX, '') == ''
 
@@ -313,6 +312,7 @@ class TreeDlg:
     def _on_key(self, id_dlg, id_ctl, data='', info=''):
         key_code = id_ctl
         state = data
+        _CARET_HORZ_INDENT = 4
 
         if key_code in {VK_ENTER, VK_SPACE}  and  not state:
             if self._activate_item():
@@ -333,6 +333,7 @@ class TreeDlg:
             if carets and len(carets) == 1 and carets[0][2] == -1 and carets[0][0] > 0:
                 x = carets[0][0]
                 self.edit.delete(x-1, 0,  x, 0)
+                self.edit.action(EDACTION_SHOW_POS, (x-1-_CARET_HORZ_INDENT, 0), (0, 0))
                 return False
 
         elif key_code == VK_BACKSPACE  and  state == 's':
@@ -412,7 +413,7 @@ class TreeDlg:
 
                     if replace:
                         edt.focus()
-                        edt.cmd(cmd_FileClose)
+                        edt.cmd(cmds.cmd_FileClose)
                     return True
             else:           # load directory
                 if len(sel_item.children) == 1  and  sel_item.children[0] is fake_node: # not checked yet
@@ -795,10 +796,3 @@ class FileIcons:
             cls._ic_map[lex] = ind
 
             return ind
-
-
-
-
-
-
-
