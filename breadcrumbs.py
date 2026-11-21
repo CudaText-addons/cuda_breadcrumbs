@@ -335,7 +335,8 @@ class Command:
 
     def print_breads(self):
         for h_ed,bread in self._ed_uis.items():
-            print(f'* bread: {h_ed:_}: {bread.ed}  -  {bread.ed.get_prop(PROP_FN, '')}')
+            fname = bread.ed.get_prop(PROP_FN, '')
+            print(f'* bread: {h_ed:_}: {bread.ed}  -  {fname}')
 
 
 
