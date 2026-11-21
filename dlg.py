@@ -205,7 +205,7 @@ class TreeDlg:
 
         try:
             self.is_busy = True
-            app_idle(True)
+            app_proc(PROC_IDLE, True)
         finally:
             self.is_busy = False
 
@@ -238,7 +238,7 @@ class TreeDlg:
 
         try:
             self.is_busy = True
-            app_idle(True)
+            app_proc(PROC_IDLE, True)
         finally:
             self.is_busy = False
 
@@ -397,7 +397,7 @@ class TreeDlg:
             sel_item = self.id_map[id_item]
             if not sel_item.is_dir:     # open file
                 path = sel_item.full_path
-                if path != edt.get_filename():
+                if path != edt.get_prop(PROP_FN, ''):
                     _key_state = app_proc(PROC_GET_KEYSTATE, '')
 
                     replace = False

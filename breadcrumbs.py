@@ -300,8 +300,8 @@ class Command:
             # check if Bread for sibling-Editor exists and is same file -- reuse
             bc2 = self._ed_uis.get(h_ed2)
             if bc2 is not None:
-                fn =  ed_self.get_filename()
-                if fn == Editor(h_ed2).get_filename()  and  fn is not None: # both Editors - same file
+                fn =  ed_self.get_prop(PROP_FN, '')
+                if fn == Editor(h_ed2).get_prop(PROP_FN, '')  and  fn is not None: # both Editors - same file
                     bc0 = bc2
                     self._ed_uis[h_ed] = bc2
                     h_ed2 = None # dont add second bread if single file
@@ -315,7 +315,8 @@ class Command:
             bc2 = self._ed_uis.get(h_ed2)
             if bc2 is None  or  (check_files  and  bc2 is bc0):
                 ed2 = Editor(h_ed2)
-                fn0,fn2 = ed_self.get_filename(),  ed2.get_filename()
+                fn0 = ed_self.get_prop(PROP_FN, '')
+                fn2 = ed2.get_prop(PROP_FN, '')
                 # if two editors are the same file - need only one bread,  two files - two breads
                 if fn0 == fn2  and  fn0 is not None:
                     self._ed_uis[h_ed2] = bc0 # point both editors to the same Bread
@@ -334,7 +335,7 @@ class Command:
 
     def print_breads(self):
         for h_ed,bread in self._ed_uis.items():
-            print(f'* bread: {h_ed:_}: {bread.ed}  -  {bread.ed.get_filename()}')
+            print(f'* bread: {h_ed:_}: {bread.ed}  -  {bread.ed.get_prop(PROP_FN, '')}')
 
 
 
@@ -345,7 +346,7 @@ class Bread:
     def __init__(self, ed_self, is_visible):
         _h_ed = ed_self.get_prop(PROP_HANDLE_SELF)
         self.ed = Editor(_h_ed)  if ed_self is ed else  ed_self
-        self.fn = self.ed.get_filename(options="*")
+        self.fn = self.ed.get_prop(PROP_FN, '*')
         self.is_visible = is_visible
 
         _handles = [self.ed.get_prop(PROP_HANDLE_PRIMARY), self.ed.get_prop(PROP_HANDLE_SECONDARY)]
@@ -423,7 +424,7 @@ class Bread:
 
         _old_root = self._root
 
-        if self.fn == self.ed_b.get_filename():
+        if self.fn == self.ed_b.get_prop(PROP_FN, ''):
             edt = self.last_ed
         else:
             edt = self.ed
@@ -592,7 +593,7 @@ class Bread:
                 pass
 
     def on_fn_change(self):
-        self.fn = self.ed.get_filename(options="*")
+        self.fn = self.ed.get_prop(PROP_FN, '*')
 
         if self.fn  and  self.hparent is None:
             self._add_ui()
